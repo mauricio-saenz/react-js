@@ -1,20 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Header from './components/header';
-import Footer from './components/footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import ItemListContainer from './components/itemlistcontainer';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import ItemListContainer from './components/ItemListContainer';
+import ItemDetailContainer from './components/ItemDetailContainer';
+import Home from './components/Home';
+import Category from './components/Category';
+import ItemDetail from './components/ItemDetail';
 
 function App() {
   return (
-    <div className='w-100 container-fluid px-0'>
-      <Header />
-      <main className='text-center'>
-        <h2>Bienvenido</h2>
-        <ItemListContainer />
-      </main>
-      <Footer />
-    </div>
+    <>
+      <Router>
+        <div className='w-100 container-fluid px-0'>
+          <Header />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/category/:id" element={<Category />} />
+            <Route path="/itemdetail/:productId" element={<ItemDetail />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </>
   );
 }
 
