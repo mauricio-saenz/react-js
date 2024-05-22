@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import CartWidget from './CartWidget';
+import CartContainer from './CartContextProvider';
+import Cart from './Cart';
 
 function NavBar(props) {
   const [categories, setCategories] = useState([]);
@@ -38,7 +39,7 @@ function NavBar(props) {
   }
 
   return (
-    <nav className="navbar navbar-expand-md navbar-light bg-light">
+    <nav className="navbar navbar-expand-md navbar-light bg-light navbar-fixed-top">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">Navbar</a>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
@@ -53,7 +54,9 @@ function NavBar(props) {
             ))}
           </ul>
         </div>
-        <CartWidget />
+        <CartContainer>
+          <Cart />
+        </CartContainer>
       </div>
     </nav>
   );

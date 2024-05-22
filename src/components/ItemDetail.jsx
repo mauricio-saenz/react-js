@@ -4,7 +4,6 @@ import BackButton from './BackButton';
 import { useParams } from 'react-router-dom';
 
 function ItemDetail() { 
-
   const { productId } = useParams();
 
   const [cartQuantity, setCartQuantity] = useState(1);
@@ -19,7 +18,7 @@ function ItemDetail() {
         setProduct(productData);
         setLoading(false);
       } catch (error) {
-        setError(error.message);
+        setError('Failed to fetch product');
         setLoading(false);
       }
     };
@@ -29,9 +28,8 @@ function ItemDetail() {
 
   async function getProductById(id) {
     const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-    //console.log(`https://fakestoreapi.com/products/${id}`);
     if (!response.ok) {
-      throw new Error('No se pudo obtener el producto');
+      throw new Error('Failed to fetch product');
     }
     const data = await response.json();
     return data;
@@ -66,14 +64,20 @@ function ItemDetail() {
       </div>
       <div className='row py-3 text-center'>
         <div className="col-12 col-md-6">      
-            <img className='w-75' src={product.image} />
+            <img className='w-75' src={product.image} alt={product.title} />
         </div>
         <div className="col-12 col-md-6 p-3">
             <h4>{product.title}</h4>
             <p>{product.description}</p>
-            <p>Precio: <span className='fw-bold'>${product.price}</span></p>
-            <ItemCount stock={10} initial={1} onAdd={handleAddToCart}/>
-            <p className='mt-5'>10 Unidades disponibles</p>
+            <p>Price: <span className='fw-bold'>${product.price}</span></p>
+            <ItemCount
+                productId={productId}
+                stock={10}
+                initial={1}
+                onAdd={(count) => handleAddToCart(count)}
+                onFinish={() => console.log('Finish shopping clicked')}
+              />
+            <p className='mt-5'>{product.stock} Units available</p>
         </div>
     </div>
     </div>
